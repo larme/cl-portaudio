@@ -32,37 +32,72 @@
                                          (%get-error-text (foreign-enum-value 'pa-error (slot-value condition 'value))))))))
                symbols)))
 
-(make-errors	
- (:no-error 0)
- (:not-anticipated -10000)
- :unanticipated-host-error
- :invalid-channel-count
- :invalid-sample-rate
- :invalid-device
- :invalid-flag
- :sample-format-not-supported
- :bad-i-o-device-combination
- :insufficient-memory
- :buffer-too-big
- :buffer-too-small
- :null-callback
- :bad-stream-ptr
- :timed-out
- :internal-error
- :device-unavailable
- :incompatible-host-api-specific-stream-info
- :stream-is-stopped
- :stream-is-not-stopped
- :input-overflowed
- :output-underflowed
- :host-api-not-found
- :invalid-host-api
- :can-not-read-from-a-callback-stream
- :can-not-write-to-a-callback-stream
- :can-not-read-from-an-output-only-stream
- :can-not-write-to-an-input-only-stream
- :incompatible-stream-host-api
- :bad-buffer-ptr)
+#+lispworks (handler-bind ((error (lambda (e)
+                                    (let ((r (find-restart 'continue e)))
+                                      (when r
+                                        (invoke-restart r))))))
+              (make-errors
+               (:no-error 0)
+               (:not-anticipated -10000)
+               :unanticipated-host-error
+               :invalid-channel-count
+               :invalid-sample-rate
+               :invalid-device
+               :invalid-flag
+               :sample-format-not-supported
+               :bad-i-o-device-combination
+               :insufficient-memory
+               :buffer-too-big
+               :buffer-too-small
+               :null-callback
+               :bad-stream-ptr
+               :timed-out
+               :internal-error
+               :device-unavailable
+               :incompatible-host-api-specific-stream-info
+               :stream-is-stopped
+               :stream-is-not-stopped
+               :input-overflowed
+               :output-underflowed
+               :host-api-not-found
+               :invalid-host-api
+               :can-not-read-from-a-callback-stream
+               :can-not-write-to-a-callback-stream
+               :can-not-read-from-an-output-only-stream
+               :can-not-write-to-an-input-only-stream
+               :incompatible-stream-host-api
+               :bad-buffer-ptr))
+#-lispworks (make-errors
+             (:no-error 0)
+             (:not-anticipated -10000)
+             :unanticipated-host-error
+             :invalid-channel-count
+             :invalid-sample-rate
+             :invalid-device
+             :invalid-flag
+             :sample-format-not-supported
+             :bad-i-o-device-combination
+             :insufficient-memory
+             :buffer-too-big
+             :buffer-too-small
+             :null-callback
+             :bad-stream-ptr
+             :timed-out
+             :internal-error
+             :device-unavailable
+             :incompatible-host-api-specific-stream-info
+             :stream-is-stopped
+             :stream-is-not-stopped
+             :input-overflowed
+             :output-underflowed
+             :host-api-not-found
+             :invalid-host-api
+             :can-not-read-from-a-callback-stream
+             :can-not-write-to-a-callback-stream
+             :can-not-read-from-an-output-only-stream
+             :can-not-write-to-an-input-only-stream
+             :incompatible-stream-host-api
+             :bad-buffer-ptr)
 
 (defun raise-if-error (err)
   "Check err and raise condition if it is needed"
